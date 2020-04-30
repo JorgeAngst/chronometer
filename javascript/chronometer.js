@@ -1,12 +1,18 @@
 class Chronometer {
   constructor() {
     this.currentTime = 0;
-    this.intervalId = 0
+    this.millisecondsTime = 0;
+    this.intervalId = 0;
+    this.intervalMillId = 0;
   }
   startClick() {  
+    this.intervalMillId = setInterval(() => {
+      console.log(this.millisecondsTime++);
+      printTime()
+    }, 10);
     this.intervalId = setInterval(() => {
-      this.currentTime++;
-      printTime();
+      console.log(this.currentTime++);
+      // printTime()
     }, 1000);
   }
   getMinutes() {
@@ -14,11 +20,13 @@ class Chronometer {
     return minutes;
   }
   getSeconds() {
-    let seconds = this.currentTime;
-    if (seconds >= 60) {
-      seconds = this.currentTime % 60;
-    }
+    let seconds = Math.floor(this.currentTime - this.getMinutes(this.currentTime) * 60);
     return seconds
+  }
+  getMillisecons() {
+    let milliseconds = Math.floor(this.millisecondsTime % 100);
+    console.log(milliseconds)
+    return milliseconds;
   }
   twoDigitsNumber(time) {
     if (time < 10) {
@@ -28,23 +36,18 @@ class Chronometer {
     }
   }
   stopClick() {
-    return clearInterval(this.intervalId);;
+    clearInterval(this.intervalId);
+    clearInterval(this.intervalMillId);
   }
   resetClick() {
     return this.currentTime = 0;
   }
   splitClick() {
+    
     let min = this.getMinutes();
     let sec = this.getSeconds();
+    let mil = this.getMillisecons();
 
-    if (min < 10 && sec < 10) {
-      return `0${min}:0${sec}`
-    } else if (min < 10 && sec > 10) {
-      return `0${min}:${sec}`
-    } else if (min > 10 && sec < 10) {
-      return `${min}:0${sec}`
-    } else {
-      return `${min}:${sec}`
-    }
+   return `${this.twoDigitsNumber(min)}:${this.twoDigitsNumber(sec)}:${this.twoDigitsNumber(mil)}`
   }
 }
