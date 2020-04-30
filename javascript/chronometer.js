@@ -7,12 +7,11 @@ class Chronometer {
   }
   startClick() {  
     this.intervalMillId = setInterval(() => {
-      console.log(this.millisecondsTime++);
+      this.millisecondsTime++;
       printTime()
     }, 10);
     this.intervalId = setInterval(() => {
-      console.log(this.currentTime++);
-      // printTime()
+      this.currentTime++;
     }, 1000);
   }
   getMinutes() {
@@ -24,8 +23,7 @@ class Chronometer {
     return seconds
   }
   getMillisecons() {
-    let milliseconds = Math.floor(this.millisecondsTime % 100);
-    console.log(milliseconds)
+    let milliseconds = Math.floor(this.millisecondsTime % 100)
     return milliseconds;
   }
   twoDigitsNumber(time) {
